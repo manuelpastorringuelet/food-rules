@@ -55,9 +55,9 @@ const FoodRules = () => {
 
   return (
     <div className="container mx-auto p-4 max-w-xl">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">{t.title}</h1>
-        <div className="flex space-x-2">
+      <div className="mb-6 text-center">
+        <h1 className="text-3xl font-bold font-serif mb-2">{t.title}</h1>
+        <div className="flex justify-center space-x-2">
           <Button variant="ghost" size="sm" onClick={() => setLanguage("en")}>
             EN
           </Button>
@@ -70,34 +70,41 @@ const FoodRules = () => {
         </div>
       </div>
 
-      <div className="mb-4 text-center">
-        <h2 className="text-lg font-semibold">
-          {currentRules[currentSection].section}
-        </h2>
-        <p className="text-sm text-gray-500">
-          {t.rule} {currentRule + 1} {t.of} {totalRules}
-        </p>
-      </div>
-
-      <Card className="mb-6 min-h-[350px]">
-        <CardContent className="px-16 pt-16 pb-4">
-          <p className="text-center text-5xl mb-4">
+      <Card className="mb-6 min-h-[350px] bg-papyrus border-none shadow-none">
+        <CardContent className="flex flex-col justify-center items-center h-full p-6">
+          <h2 className="text-xl font-serif mb-4 text-center">
+            {currentRules[currentSection].section}
+          </h2>
+          <p className="text-center text-6xl mb-6 vintage-emoji">
             {currentRules[currentSection].rules[currentRule].emoji}
           </p>
-          <p className="text-xl font-semibold mb-3 text-center">
+          <p className="text-xl font-serif mb-4 text-center vintage-text">
             {currentRules[currentSection].rules[currentRule].rule}
           </p>
-          <p className="text-center text-sm">
+          <p className="text-center text-sm italic vintage-text">
             {currentRules[currentSection].rules[currentRule].info}
           </p>
         </CardContent>
       </Card>
 
       <div className="flex justify-between mt-4">
-        <Button variant="outline" size="sm" onClick={() => changeRule(-1)}>
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={() => changeRule(-1)}
+          className="w-1/3 vintage-button"
+        >
           {t.prevButton}
         </Button>
-        <Button variant="outline" size="sm" onClick={() => changeRule(1)}>
+        <p className="text-sm text-center self-center vintage-text">
+          {t.rule} {currentRule + 1} {t.of} {totalRules}
+        </p>
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={() => changeRule(1)}
+          className="w-1/3 vintage-button"
+        >
           {t.nextButton}
         </Button>
       </div>
