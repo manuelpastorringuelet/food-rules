@@ -10,6 +10,13 @@
   --button-text: #3a3a3a;
 }
 
+html, body {
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
