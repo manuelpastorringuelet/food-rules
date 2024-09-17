@@ -313,55 +313,30 @@ export const spanishRules = [
         rule: "El pan es un alimento básico en cada comida.",
         info: "Alemania tiene una rica cultura del pan con muchas variedades.",
       },
-    ],
-  },
-  {
-    section: "Etiqueta",
-    rules: [
       {
-        emoji: "🍴",
-        rule: "Usa buenos modales en la mesa.",
-        info: "Los alemanes valoran los buenos modales en la mesa, incluyendo el uso correcto de los cubiertos.",
-      },
-    ],
-  },
-  {
-    section: "Platos Principales",
-    rules: [
-      {
-        emoji: "🥩",
-        rule: "La carne suele ser el centro de la comida principal.",
-        info: "La cocina tradicional alemana a menudo presenta la carne como componente principal.",
+        emoji: "🍰",
+        rule: "Trata los caprichos como caprichos.",
+        info: "Disfruta de los caprichos ocasionalmente, pero no los hagas parte regular de tu dieta.",
       },
       {
-        emoji: "🥔",
-        rule: "Las patatas son una guarnición común.",
-        info: "Las patatas se preparan de varias maneras y frecuentemente acompañan a los platos principales.",
+        emoji: "🍽️",
+        rule: "Deja algo en tu plato.",
+        info: "Esta práctica puede ayudarte a evitar comer en exceso y ser más consciente del tamaño de las porciones.",
       },
       {
-        emoji: "🥗",
-        rule: "Las ensaladas suelen servirse como guarnición, no como plato principal.",
-        info: "Aunque las ensaladas son comunes, típicamente no se consideran una comida completa por sí solas.",
-      },
-    ],
-  },
-  {
-    section: "Tradiciones",
-    rules: [
-      {
-        emoji: "☕",
-        rule: "El café y el pastel por la tarde es una tradición.",
-        info: "Muchos alemanes disfrutan de una pausa para el café y el pastel (Kaffee und Kuchen) por la tarde.",
+        emoji: "🌱",
+        rule: "Planta un huerto si tienes espacio, una jardinera si no lo tienes.",
+        info: "Cultivar tu propia comida puede proporcionar productos frescos y aumentar tu aprecio por los alimentos integrales.",
       },
       {
-        emoji: "🍺",
-        rule: "La cerveza se considera un alimento en Baviera.",
-        info: "En Baviera, la cerveza está oficialmente clasificada como un alimento.",
+        emoji: "👨‍🍳",
+        rule: "Cocina.",
+        info: "Cocinar tus propias comidas te permite controlar los ingredientes y el tamaño de las porciones.",
       },
       {
-        emoji: "🥨",
-        rule: "Las especialidades regionales son importantes.",
-        info: "Diferentes regiones de Alemania tienen sus propios platos únicos y tradiciones culinarias.",
+        emoji: "🎉",
+        rule: "Rompe las reglas de vez en cuando.",
+        info: "La flexibilidad en tu dieta puede hacerla más sostenible y agradable a largo plazo.",
       },
     ],
   },

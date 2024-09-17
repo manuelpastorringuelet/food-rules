@@ -21,7 +21,7 @@ const FoodRules = () => {
 
   useEffect(() => {
     const detectLanguage = () => {
-      const userLanguage = navigator.language.split('-')[0];
+      const userLanguage = navigator.language.split("-")[0];
       if (Object.keys(rules).includes(userLanguage)) {
         setLanguage(userLanguage);
       } else {
@@ -60,13 +60,25 @@ const FoodRules = () => {
           <div className="mb-6 text-center">
             <h1 className="text-3xl font-bold font-serif mb-2">{t.title}</h1>
             <div className="flex justify-center space-x-2">
-              <Button variant="ghost" size="sm" onClick={() => setLanguage("en")}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setLanguage("en")}
+              >
                 EN
               </Button>
-              <Button variant="ghost" size="sm" onClick={() => setLanguage("de")}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setLanguage("de")}
+              >
                 DE
               </Button>
-              <Button variant="ghost" size="sm" onClick={() => setLanguage("es")}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setLanguage("es")}
+              >
                 ES
               </Button>
             </div>
