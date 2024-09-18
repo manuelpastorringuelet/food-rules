@@ -6,7 +6,7 @@ import { englishRules } from "@/data/englishRules";
 import { germanRules } from "@/data/germanRules";
 import { spanishRules } from "@/data/spanishRules";
 import { translations } from "@/data/translations";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const rules = {
   en: englishRules,
@@ -18,6 +18,29 @@ const FoodRules = () => {
   const [language, setLanguage] = useState("en");
   const [currentSection, setCurrentSection] = useState(0);
   const [currentRule, setCurrentRule] = useState(0);
+
+  const currentRules = rules[language as keyof typeof rules];
+  const totalSections = currentRules.length;
+  const totalRules = currentRules[currentSection].rules.length;
+
+  const changeRule = useCallback(
+    (direction: number) => {
+      let newRule = currentRule + direction;
+      let newSection = currentSection;
+
+      if (newRule < 0) {
+        newSection = (currentSection - 1 + totalSections) % totalSections;
+        newRule = currentRules[newSection].rules.length - 1;
+      } else if (newRule >= totalRules) {
+        newSection = (currentSection + 1) % totalSections;
+        newRule = 0;
+      }
+
+      setCurrentSection(newSection);
+      setCurrentRule(newRule);
+    },
+    [currentRule, currentSection, totalSections, totalRules, currentRules]
+  );
 
   useEffect(() => {
     const detectLanguage = () => {
@@ -32,29 +55,26 @@ const FoodRules = () => {
     detectLanguage();
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") {
+        changeRule(-1);
+      } else if (event.key === "ArrowRight") {
+        changeRule(1);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [changeRule, currentRule, currentSection]); // Remove changeRule from dependencies
+
   const t = translations[language as keyof typeof translations];
-  const currentRules = rules[language as keyof typeof rules];
-  const totalSections = currentRules.length;
-  const totalRules = currentRules[currentSection].rules.length;
-
-  const changeRule = (direction: number) => {
-    let newRule = currentRule + direction;
-    let newSection = currentSection;
-
-    if (newRule < 0) {
-      newSection = (currentSection - 1 + totalSections) % totalSections;
-      newRule = currentRules[newSection].rules.length - 1;
-    } else if (newRule >= totalRules) {
-      newSection = (currentSection + 1) % totalSections;
-      newRule = 0;
-    }
-
-    setCurrentSection(newSection);
-    setCurrentRule(newRule);
-  };
 
   return (
-    <div className="flex flex-col overflow-hidden container h-[100dvh] py-8">
+    <div className="flex flex-col overflow-hidden container h-[100dvh] sm:h-auto  py-8">
       <div className="sm:min-h-[65dvh] overflow-auto flex-grow sm:flex">
         <div className="container mx-auto p-4 max-w-xl">
           <div className="mb-6 text-center">
