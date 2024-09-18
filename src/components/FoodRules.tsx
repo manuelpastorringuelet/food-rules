@@ -1,18 +1,12 @@
 "use client";
 
+import LanguageSelector from "@/components/LanguageSelector";
+import RuleDisplay from "@/components/RuleDisplay";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { englishRules } from "@/data/englishRules";
-import { germanRules } from "@/data/germanRules";
-import { spanishRules } from "@/data/spanishRules";
+import { rules } from "@/data/rules";
 import { translations } from "@/data/translations";
+import { changeRule, detectLanguage } from "@/utils/languageUtils";
 import { useCallback, useEffect, useState } from "react";
-
-const rules = {
-  en: englishRules,
-  de: germanRules,
-  es: spanishRules,
-};
 
 const FoodRules = () => {
   const [language, setLanguage] = useState("en");
@@ -23,19 +17,16 @@ const FoodRules = () => {
   const totalSections = currentRules.length;
   const totalRules = currentRules[currentSection].rules.length;
 
-  const changeRule = useCallback(
+  const handleChangeRule = useCallback(
     (direction: number) => {
-      let newRule = currentRule + direction;
-      let newSection = currentSection;
-
-      if (newRule < 0) {
-        newSection = (currentSection - 1 + totalSections) % totalSections;
-        newRule = currentRules[newSection].rules.length - 1;
-      } else if (newRule >= totalRules) {
-        newSection = (currentSection + 1) % totalSections;
-        newRule = 0;
-      }
-
+      const { newRule, newSection } = changeRule(
+        direction,
+        currentRule,
+        currentSection,
+        totalSections,
+        totalRules,
+        currentRules
+      );
       setCurrentSection(newSection);
       setCurrentRule(newRule);
     },
@@ -43,83 +34,39 @@ const FoodRules = () => {
   );
 
   useEffect(() => {
-    const detectLanguage = () => {
-      const userLanguage = navigator.language.split("-")[0];
-      if (Object.keys(rules).includes(userLanguage)) {
-        setLanguage(userLanguage);
-      } else {
-        setLanguage("en"); // Default to English if the detected language is not supported
-      }
-    };
-
-    detectLanguage();
+    setLanguage(detectLanguage());
   }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
-        changeRule(-1);
+        handleChangeRule(-1);
       } else if (event.key === "ArrowRight") {
-        changeRule(1);
+        handleChangeRule(1);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [changeRule, currentRule, currentSection]); // Remove changeRule from dependencies
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleChangeRule]);
 
   const t = translations[language as keyof typeof translations];
 
   return (
-    <div className="flex flex-col overflow-hidden container h-[100dvh] sm:h-auto  py-8">
+    <div className="flex flex-col overflow-hidden  h-[100dvh] sm:h-auto py-8">
       <div className="sm:min-h-[65dvh] overflow-auto flex-grow sm:flex">
         <div className="container mx-auto p-4 max-w-xl">
           <div className="mb-6 text-center">
             <h1 className="text-3xl font-bold font-serif mb-2">{t.title}</h1>
-            <div className="flex justify-center space-x-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setLanguage("en")}
-              >
-                EN
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setLanguage("de")}
-              >
-                DE
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setLanguage("es")}
-              >
-                ES
-              </Button>
-            </div>
+            <LanguageSelector setLanguage={setLanguage} />
           </div>
 
-          <Card className="mb-6 min-h-[350px] bg-papyrus border-none shadow-none">
-            <CardContent className="flex flex-col justify-center items-center h-full p-6">
-              <h2 className="text-xl font-serif mb-4 text-center">
-                {currentRules[currentSection].section}
-              </h2>
-              <p className="text-center text-6xl mb-6 vintage-emoji">
-                {currentRules[currentSection].rules[currentRule].emoji}
-              </p>
-              <p className="text-xl font-serif mb-4 text-center vintage-text">
-                {currentRules[currentSection].rules[currentRule].rule}
-              </p>
-              <p className="text-center text-sm italic vintage-text">
-                {currentRules[currentSection].rules[currentRule].info}
-              </p>
-            </CardContent>
-          </Card>
+          <RuleDisplay
+            section={currentRules[currentSection].section}
+            emoji={currentRules[currentSection].rules[currentRule].emoji}
+            rule={currentRules[currentSection].rules[currentRule].rule}
+            info={currentRules[currentSection].rules[currentRule].info}
+          />
         </div>
       </div>
 
@@ -128,7 +75,7 @@ const FoodRules = () => {
           <Button
             variant="outline"
             size="lg"
-            onClick={() => changeRule(-1)}
+            onClick={() => handleChangeRule(-1)}
             className="w-1/3 vintage-button"
           >
             {t.prevButton}
@@ -139,7 +86,7 @@ const FoodRules = () => {
           <Button
             variant="outline"
             size="lg"
-            onClick={() => changeRule(1)}
+            onClick={() => handleChangeRule(1)}
             className="w-1/3 vintage-button"
           >
             {t.nextButton}

@@ -18,7 +18,7 @@ export const translations = {
     section: "Abschnitt",
   },
   es: {
-    title: "Reglas de Alimentación de Michael Pollan",
+    title: "Reglas Alimentarias de Michael Pollan",
     selectLanguage: "Seleccionar idioma",
     prevButton: "Anterior",
     nextButton: "Siguiente",
