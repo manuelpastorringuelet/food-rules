@@ -54,8 +54,8 @@ const FoodRules = () => {
   };
 
   return (
-    <div className="flex flex-col h-[100dvh] max-h-[100dvh] overflow-hidden">
-      <div className="flex-grow overflow-auto">
+    <div className="flex flex-col overflow-hidden container h-[100dvh] py-8">
+      <div className="sm:min-h-[65dvh] overflow-auto flex-grow sm:flex">
         <div className="container mx-auto p-4 max-w-xl">
           <div className="mb-6 text-center">
             <h1 className="text-3xl font-bold font-serif mb-2">{t.title}</h1>
